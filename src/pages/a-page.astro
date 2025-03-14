@@ -1,10 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import WrapperComponent from '../components/WrapperComponent';
+// Per un componente che richiede React Query (es. UsersComponent)
+import Layout from '../layouts/Layout.astro'
+import WrapperComponent from '../components/WrapperComponent'
 
-const { componentType = 'users' } = Astro.props;
+//const { componentType = 'users' } = Astro.props
+const { componentType = 'posts' } = Astro.props
+const useQueryString = true
 ---
 
 <Layout title="Dynamic Component Page">
-  <WrapperComponent client:load componentType={componentType} />
+  <WrapperComponent
+    client:load
+    componentType={componentType}
+    useQueryString={useQueryString}
+    additionalProps={{ someValue: 123 }}
+  />
 </Layout>
