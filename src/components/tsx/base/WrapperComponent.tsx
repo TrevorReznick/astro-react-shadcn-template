@@ -1,9 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { lazy, Suspense } from 'react'
 
-const UsersComponent = lazy(() => import('@/components/dynamic/UsersComponent'))
-const PostsComponent = lazy(() => import('@/components/dynamic/PostsComponent'))
-const TestComponent = lazy(() => import('@/components/dynamic/TestComponent'))
+const UsersComponent = lazy(
+  () => import('@/components/tsx/dynamic/UsersComponent')
+)
+const PostsComponent = lazy(
+  () => import('@/components/tsx/dynamic/PostsComponent')
+)
+const TestComponent = lazy(
+  () => import('@/components/tsx/dynamic/TestComponent')
+)
 
 const queryClient = new QueryClient()
 

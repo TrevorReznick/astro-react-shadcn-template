@@ -1,28 +1,28 @@
-import * as React from "react"
-import { Moon, Sun } from "lucide-react"
-import { useStore } from "@nanostores/react"
+import * as React from 'react'
+import { Moon, Sun } from 'lucide-react'
+import { useStore } from '@nanostores/react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/tsx/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { themeStore } from "./theme-provider"
+} from '@/components/tsx/ui/dropdown-menu'
+import { themeStore } from '@/components/tsx/theme-provider'
 
 export function ThemeToggle() {
   const { theme } = useStore(themeStore)
 
-  const setTheme = (theme: "light" | "dark" | "system") => {
+  const setTheme = (theme: 'light' | 'dark' | 'system') => {
     const root = window.document.documentElement
-    root.classList.remove("light", "dark")
+    root.classList.remove('light', 'dark')
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
         .matches
-        ? "dark"
-        : "light"
+        ? 'dark'
+        : 'light'
 
       root.classList.add(systemTheme)
       themeStore.set({ ...themeStore.get(), theme, systemTheme })
@@ -31,7 +31,7 @@ export function ThemeToggle() {
       themeStore.set({ ...themeStore.get(), theme })
     }
 
-    localStorage.setItem("ui-theme", theme)
+    localStorage.setItem('ui-theme', theme)
   }
 
   return (
@@ -44,13 +44,13 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={() => setTheme('light')}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={() => setTheme('dark')}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={() => setTheme('system')}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
