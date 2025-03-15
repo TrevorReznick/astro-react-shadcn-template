@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { lazy, Suspense } from 'react'
 
-// Lazy load components
 const UsersComponent = lazy(() => import('@/components/dynamic/UsersComponent'))
 const PostsComponent = lazy(() => import('@/components/dynamic/PostsComponent'))
 const TestComponent = lazy(() => import('@/components/dynamic/TestComponent'))
@@ -11,7 +10,6 @@ const queryClient = new QueryClient()
 interface WrapperComponentProps {
   componentType: string
   useQueryString?: boolean
-  additionalProps?: Record<string, any>
 }
 
 const componentMap = {
@@ -22,28 +20,28 @@ const componentMap = {
 
 export default function WrapperComponent({
   componentType,
-  useQueryString = true,
-  additionalProps = {},
+  useQueryString,
 }: WrapperComponentProps) {
   const DynamicComponent =
-    componentMap[componentType as keyof typeof componentMap] || UsersComponent
-
-  // Renderizza il componente in base al flag useQueryString
-  const renderComponent = () => {
-    if (useQueryString) {
-      return (
-        <QueryClientProvider client={queryClient}>
-          <DynamicComponent {...additionalProps} />
-        </QueryClientProvider>
-      )
-    } else {
-      return <DynamicComponent {...additionalProps} />
-    }
-  }
+    componentMap[componentType as keyof typeof componentMap] || PostsComponent
+  console.log(
+    'Loading component:',
+    componentType,
+    'with useQueryString:',
+    useQueryString
+  )
 
   return (
-    <Suspense fallback={<div className="p-4">Loading component...</div>}>
-      {renderComponent()}
+    <Suspense
+      fallback={<div className="p-4 text-center">Loading component...</div>}
+    >
+      {useQueryString ? (
+        <QueryClientProvider client={queryClient}>
+          <DynamicComponent />
+        </QueryClientProvider>
+      ) : (
+        <DynamicComponent />
+      )}
     </Suspense>
   )
 }
